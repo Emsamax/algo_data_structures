@@ -15,7 +15,7 @@ class prefix_trie:
     def __init__(self):
         self.root = trie_node()
 
-    def insert(self, word) -> None:
+    def insert(self, word: str) -> None:
         """
         :param word to insert in the trie
         """
@@ -29,11 +29,52 @@ class prefix_trie:
             current = current.children[char]
         current.is_end = True
 
-    def remove(self, word) -> None:
+    def remove(self, word: str, verbose: bool = False) -> None:
         """
         :param word to remove from the trie
         """
-        pass
+        current = self.root
+        # branch that represent the word to delete
+        trie_branch = [current]
+        # get nodes
+        for char in word:
+            current = current.children.get(char)
+            # word does not exist
+            if current is None:
+                return
+            trie_branch.append(current)
+        # set last node.isEnd to false
+        current.is_end = False
+        # loop from last to root node
+        # len(trie_branch) to start at the second last node to check last node children
+        for current_id in range(len(trie_branch) - 2, -1, -1):
+            current = trie_branch[current_id]
+            child_id = current_id + 1
+            # find the char of the child to delete
+            child_char = None
+
+            for char, node in current.children.items():
+                if node == trie_branch[child_id]:
+                    child_char = char
+                    break
+            if verbose:
+                print("{", end="")
+                for node in trie_branch:
+                    print(node.text, end=",")
+                print("}", end="")
+                print("\ncurrent ", current.text)
+                print("child char", child_char)
+
+            # another word from this prefix
+            if len(current.children) > 1:
+                # del current char
+                del trie_branch[current_id].children[child_char]
+                # break to stop deleting
+                break
+
+            # current have childrends -> del childrens
+            if trie_branch[current_id].children:
+                del trie_branch[current_id].children[child_char]
 
     def search(self, word: str) -> bool:
         """
@@ -52,11 +93,12 @@ class prefix_trie:
         :param start of the range
         :param stop of the range
         """
-        pass
 
-    def visualize(self, filename: str, comment: str, render: bool) -> None:
+    def visualize(
+        self, directory: str, filename: str, comment: str, render: bool
+    ) -> None:
         current = self.root
-        diagram = Digraph(name=filename, comment=comment)
+        diagram = Digraph(name=filename, comment=comment, directory=directory)
         node_id = 0
         diagram.node(str(node_id), self.root.text)
         q = Queue()

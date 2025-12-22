@@ -20,4 +20,19 @@ if __name__ == "__main__":
 
     # search for "ignorance"
     print(trie.search("ignorance"))
-    trie.visualize("graphs/dataset_1", "prefix trie made with dataset n°1", True)
+    trie.visualize("graphs/", "dataset_1", "prefix trie made with dataset n°1", True)
+
+    little = dataset_1[::10]
+    print(little)
+    little_trie = prefix_trie()
+    for word in little:
+        little_trie.insert(word=word)
+    print(little_trie.search("branchia"))
+    little_trie.visualize(
+        "graphs/", "little_before", "prefix trie before removing word branchia", True
+    )
+    little_trie.remove("branchia")
+    little_trie.visualize(
+        "graphs/", "little_after", "prefix trie after removing word branchia", True
+    )
+    print(little_trie.search("branchia"))
