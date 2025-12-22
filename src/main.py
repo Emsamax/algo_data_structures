@@ -36,3 +36,4 @@ if __name__ == "__main__":
         "graphs/", "little_after", "prefix trie after removing word branchia", True
     )
     print(little_trie.search("branchia"))
+    print(little_trie.range_search("bloke", "dustless", current=None, current_word="", result=None))

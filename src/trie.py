@@ -15,6 +15,9 @@ class prefix_trie:
     def __init__(self):
         self.root = trie_node()
 
+    def __checkword(self, word: str, start: str, stop: str) -> bool:
+        return start <= word <= stop
+
     def insert(self, word: str) -> None:
         """
         :param word to insert in the trie
@@ -52,7 +55,6 @@ class prefix_trie:
             child_id = current_id + 1
             # find the char of the child to delete
             child_char = None
-
             for char, node in current.children.items():
                 if node == trie_branch[child_id]:
                     child_char = char
@@ -87,12 +89,51 @@ class prefix_trie:
             current = current.children[char]
         return current.is_end
 
-    def range_search(self, start: str, stop: str) -> np.array:
+    def range_search(
+        self,
+        start: str,
+        stop: str,
+        current: trie_node = None,
+        current_word: str = "",
+        result: list = None,
+    ) -> np.array:
         """
-        return all words inside the range
+        return all words inside the range (it's a dfs with range)
         :param start of the range
         :param stop of the range
         """
+        if current is None:
+            current = self.root
+        if result is None:
+            result = []
+
+        # check if range in trie
+        if not (self.search(start) | self.search(stop)):
+            print("invalid range, not in the trie ", start, " ", stop)
+            return
+
+        if current.is_end:
+            if self.__checkword(current_word, start, stop):
+                result.append(current_word)
+            elif current_word > stop:
+                return np.array(result)
+
+        # get all childrens alphabetically sorted
+        sort_childs = sorted(current.children.keys())
+        for char in sort_childs:
+            # update word and child
+            child = current.children[char]
+            new_word = current_word + char
+            # dont expolore if new word outside of the range
+            if new_word > stop:
+                break
+            # recursif call
+            self.range_search(start, stop, child, new_word, result)
+
+        # return array only at root level
+        if current == self.root:
+            return np.array(result)
+        return None
 
     def visualize(
         self, directory: str, filename: str, comment: str, render: bool
