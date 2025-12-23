@@ -12,7 +12,7 @@ if __name__ == "__main__":
         3: "datasets/dataset_3.txt",
     }
     parser = argparse.ArgumentParser(
-        #preserve string format
+        # preserve string format
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description="""Script that runs prefix_trie or suffix array algorithms for benchmarking with hyperfine
 
@@ -28,7 +28,9 @@ Both algorithms are tested on the same scenario:
     # algo arguments, mutually exclusive
     algo_group = parser.add_mutually_exclusive_group(required=True)
     algo_group.add_argument("--trie", action="store_true", help="prefix trie algorithm")
-    algo_group.add_argument("--array", action="store_true", help="suffix array algorithm")
+    algo_group.add_argument(
+        "--array", action="store_true", help="suffix array algorithm"
+    )
 
     # Dataset
     parser.add_argument(
@@ -67,12 +69,14 @@ Both algorithms are tested on the same scenario:
 
     # init trie
     for word in words:
-       struct.insert(word=word)
+        struct.insert(word=word)
 
     # TODO: Update the scenario to insert all the words
     # search for random words up to 1/10 of the dataset
     # then remove the words searched
     # search them again
+
+    # TODO: update README.md, add args and precise to activate .venv
 
     # search for "ignorance"
     print(struct.search("ignorance"))
