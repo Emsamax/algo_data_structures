@@ -136,7 +136,12 @@ class prefix_trie:
         return None
 
     def visualize(
-        self, directory: str, filename: str, comment: str, render: bool
+        # FIXME: Override file if already exists
+        self,
+        directory: str,
+        filename: str,
+        comment: str,
+        render: bool,
     ) -> None:
         current = self.root
         diagram = Digraph(name=filename, comment=comment, directory=directory)
