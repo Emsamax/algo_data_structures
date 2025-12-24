@@ -18,10 +18,11 @@ if __name__ == "__main__":
 
 Both algorithms are tested on the same scenario:
   - First insert all the words
+  - Select 2 random words then proceed to do a range search
   - Search for random words in this trie or array (1/10 of original dataset)
   - Remove those words
   - Search for them again
-  - Select 2 random words then proceed to do a range search
+ 
 """,
     )
 
@@ -56,10 +57,13 @@ Both algorithms are tested on the same scenario:
     args = parser.parse_args()
     # load the specified dataset
     words = data_loader.load_data(datasets[args.dataset])
-    print("=" * 10)
-    print("random words", data_loader.get_slice(words))
-    print("random words", data_loader.get_slice(words))
-    print("=" * 10)
+    random_words = data_loader.get_slice(words, pair=False)
+    range = data_loader.get_slice(words, pair=True)
+    start = range[0]
+    stop = range[1]
+
+    # print(random_words)
+    # print(range)
 
     struct = None
     if args.trie:
@@ -71,34 +75,18 @@ Both algorithms are tested on the same scenario:
     for word in words:
         struct.insert(word=word)
 
-    # TODO: Update the scenario to insert all the words
-    # search for random words up to 1/10 of the dataset
-    # then remove the words searched
-    # search them again
-    # range search with 2 words
-
-    # TODO: update README.md, add args and precise to activate .venv
-
-    # search for "ignorance"
-    print(struct.search("ignorance"))
     struct.visualize("graphs/", "dataset_1", "prefix trie made with dataset n°1", True)
 
-    little = words[::10]
-    print(little)
-    little_trie = prefix_trie()
-    for word in little:
-        little_trie.insert(word=word)
-    print(little_trie.search("branchia"))
-    little_trie.visualize(
-        "graphs/", "little_before", "prefix trie before removing word branchia", True
-    )
-    little_trie.remove("branchia")
-    little_trie.visualize(
-        "graphs/", "little_after", "prefix trie after removing word branchia", True
-    )
-    print(little_trie.search("branchia"))
-    print(
-        little_trie.range_search(
-            "bloke", "dustless", current=None, current_word="", result=None
-        )
-    )
+    # scenarios
+    # 1 range search
+    print(range)
+    print(struct.range_search(start, stop, current=None, current_word="", result=None))
+    # 2 search
+    for word in random_words:
+        print(word, " found  : ", struct.search(word=word))
+    # 3 remove
+    for word in random_words:
+        struct.remove(word=word, verbose=False)
+    # 4 search again
+    for word in random_words:
+        print(word, " found  : ", struct.search(word=word))

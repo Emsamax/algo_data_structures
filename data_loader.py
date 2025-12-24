@@ -35,7 +35,7 @@ def inverse(words: np.array) -> np.array:
     return np.array([word[::-1] for word in words])
 
 
-def get_slice(dataset: np.array) -> np.array:
+def get_slice(dataset: np.array, pair: bool) -> np.array:
     """
     Return an array with len of 1/10 of the original dataset
     filled with random words
@@ -43,8 +43,16 @@ def get_slice(dataset: np.array) -> np.array:
     :param self: self
     :param dataset: list of words
     :type dataset: np.array
+    :param pair if true return a pair of sorted random words (useful for range search)
     :return: the randoms words form the given dataset
     :rtype: np.array
     """
-    size = len(dataset) // 10
-    return np.random.choice(dataset, size=size, replace=False)
+    if pair:
+        size = 2
+        # sorted alphabetically
+        selected = np.random.choice(dataset, size=size, replace=False)
+        return sorted([str(word) for word in selected])
+
+    else:
+        size = len(dataset) // 10
+        return np.random.choice(dataset, size=size, replace=False)
