@@ -75,6 +75,7 @@ Both algorithms are tested on the same scenario:
     # search for random words up to 1/10 of the dataset
     # then remove the words searched
     # search them again
+    # range search with 2 words
 
     # TODO: update README.md, add args and precise to activate .venv
 

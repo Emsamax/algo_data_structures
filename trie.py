@@ -136,7 +136,6 @@ class prefix_trie:
         return None
 
     def visualize(
-        # FIXME: Override file if already exists
         self,
         directory: str,
         filename: str,
@@ -167,8 +166,8 @@ class prefix_trie:
                 diagram.edge(str(parent_index), str(node_id))
                 q.put((child_node, node_id))
 
-        o = open(filename + ".gv", "w")
+        o = open(directory+filename + ".gv", "w")
         o.write(diagram.source)
         if render:
-            diagram.render(filename + ".gv", view=False)
+            diagram.render(filename + ".gv", view=False, overwrite_source=True)
         o.close()
