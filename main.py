@@ -6,6 +6,8 @@ import argparse
 # TODO : visualize finction for array
 # TODO : normalize console output (same format for trie/array algo)
 # FIXME : range search isn't working
+# TODO : benchmarking with hyperfind and cProfile
+# TODO : write seminar 
 
 
 if __name__ == "__main__":
