@@ -56,3 +56,24 @@ def get_slice(dataset: np.array, pair: bool) -> np.array:
     else:
         size = len(dataset) // 10
         return np.random.choice(dataset, size=size, replace=False)
+
+
+def get_random_suffixes(words: np.array) -> np.array:
+    """
+    generate random suffixes for all words given
+    :param words: Description
+    :type words: np.array
+    :return: Description
+    :rtype: Any
+    """
+    suffixes = []
+
+    for word in words:
+        if len(word) > 2:
+            start_pos = np.random.randint(0, len(word) - 1)
+            suffix = word[start_pos:]
+            suffixes.append(suffix)
+        else:
+            suffixes.append(word)
+
+    return np.array(suffixes)

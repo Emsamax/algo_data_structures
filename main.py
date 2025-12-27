@@ -3,6 +3,10 @@ from trie import prefix_trie
 from array import suffix_array
 import argparse
 
+# TODO : visualize finction for array
+# TODO : normalize console output (same format for trie/array algo)
+# FIXME : range search isn't working
+
 
 if __name__ == "__main__":
 
@@ -66,27 +70,58 @@ Both algorithms are tested on the same scenario:
     # print(range)
 
     struct = None
-    if args.trie:
-        struct = prefix_trie()
-    else:
-        struct = suffix_array()
-
-    # init trie
-    for word in words:
-        struct.insert(word=word)
-
-    struct.visualize("graphs/", "dataset_1", "prefix trie made with dataset n°1", True)
-
     # scenarios
-    # 1 range search
+
     print(range)
-    print(struct.range_search(start, stop, current=None, current_word="", result=None))
-    # 2 search
-    for word in random_words:
-        print(word, " found  : ", struct.search(word=word))
-    # 3 remove
-    for word in random_words:
-        struct.remove(word=word, verbose=False)
-    # 4 search again
-    for word in random_words:
-        print(word, " found  : ", struct.search(word=word))
+    struct = suffix_array()
+    if args.array:
+        """
+        ARRAY
+        """
+        # 1 range search
+        print("=" * 30)
+        print("RANGE SEARCH")
+        print("=" * 30)
+        print(struct.range_search(start, stop))
+        suffixes = data_loader.get_random_suffixes(words)
+
+        # 2 search
+        for suffix in suffixes:
+            result = struct.search(suffix)
+            print(f"Words with suffix '{suffix}': {result}")
+
+        # 3 remove
+        for word in words:
+            print(f"remove word : '{word}'")
+            struct.remove(word)
+        # 4 search again
+        for suffix in suffixes:
+            result = struct.search(suffix)
+            print(f"Words with suffix '{suffix}': {result}")
+
+    else:
+        """
+        TRIE
+        """
+        # init trie
+        struct = prefix_trie()
+        for word in words:
+            struct.insert(word=word)
+
+        if args.graph:
+            struct.visualize(
+                "graphs/", "dataset_1", "prefix trie made with dataset n°1", True
+            )
+
+        print(
+            struct.range_search(start, stop, current=None, current_word="", result=None)
+        )
+        # 2 search
+        for word in random_words:
+            print(word, " found  : ", struct.search(word=word))
+        # 3 remove
+        for word in random_words:
+            struct.remove(word=word, verbose=False)
+        # 4 search again
+        for word in random_words:
+            print(word, " found  : ", struct.search(word=word))

@@ -4,7 +4,7 @@ from queue import Queue
 
 
 class trie_node:
-    def __init__(self, text=""):
+    def __init__(self, text="") -> None:
         self.text = text
         self.children = dict()
         self.is_end = False
@@ -135,13 +135,7 @@ class prefix_trie:
             return np.array(result)
         return None
 
-    def visualize(
-        self,
-        directory: str,
-        filename: str,
-        comment: str,
-        render: bool,
-    ) -> None:
+    
         current = self.root
         diagram = Digraph(name=filename, comment=comment, directory=directory)
         node_id = 0
@@ -166,7 +160,7 @@ class prefix_trie:
                 diagram.edge(str(parent_index), str(node_id))
                 q.put((child_node, node_id))
 
-        o = open(directory+filename + ".gv", "w")
+        o = open(directory + filename + ".gv", "w")
         o.write(diagram.source)
         if render:
             diagram.render(filename + ".gv", view=False, overwrite_source=True)

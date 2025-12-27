@@ -11,14 +11,13 @@ run the command
 
 ```
 
-then install the packages below with 
+then install the packages below with.
 
 ```bash
-pip install graphviz matplotlib memory-profiler
+pip install graphviz matplotlib memory-profiler argparse
 ```
 
-
-to see packages manualy installed in .venv 
+to see packages manualy installed in .venv.
 
 ```bash
  pip list --not-required > README.md
@@ -30,11 +29,7 @@ matplotlib      3.10.8
 memory-profiler 0.61.0
 pip             25.3
 
-```
-
-```bash
-pip install argparse
-```
+``` 
 
 get random english words using  
 
