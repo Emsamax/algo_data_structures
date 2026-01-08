@@ -120,13 +120,50 @@ class suffix_array:
         :return: Description
         :rtype: ndarray[_AnyShape, dtype[Any]]
         """
-        pass
+        results = set()
+        # Get all unique words from the dictionary
+        all_words = list(self.words.keys())
+        # Filter words that are in the range [start, stop]
+        for word in all_words:
+            if start <= word <= stop:
+                results.add(word)
+        return np.array(sorted(list(results)), dtype=str)
 
     def visualize(
         self,
         directory: str,
         filename: str,
         comment: str,
-        render: bool,
     ) -> None:
-        pass
+        """
+        Visualize the suffix array as a table showing:
+        - Index in the array
+        - Suffix
+        - Original word
+        - Suffix length
+
+        Output the result in a .txt file and creates the directory if does not exists.
+        """
+        import os
+
+        # Create directory if it doesn't exist
+        os.makedirs(directory, exist_ok=True)
+
+        # Generate text table
+        txt_path = os.path.join(directory, f"{filename}.txt")
+        with open(txt_path, "w", encoding="utf-8") as f:
+            f.write(f"# {comment}\n")
+            f.write(f"# Total suffixes: {len(self.suffixes_array)}\n")
+            f.write(f"# Total words: {len(self.words)}\n\n")
+
+            # Header
+            f.write(
+                f"{'Index':<8} | {'Suffix':<30} | {'Original Word':<30} | {'Length':<8}\n"
+            )
+            f.write("-" * 90 + "\n")
+
+            # Data rows
+            for idx, (suffix, word) in enumerate(self.suffixes_array):
+                f.write(f"{idx:<8} | {suffix:<30} | {word:<30} | {len(suffix):<8}\n")
+
+        print(f"Text visualization saved to: {txt_path}")

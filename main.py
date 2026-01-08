@@ -7,7 +7,7 @@ import argparse
 # TODO : normalize console output (same format for trie/array algo)
 # FIXME : range search isn't working
 # TODO : benchmarking with hyperfind and cProfile
-# TODO : write seminar 
+# TODO : write seminar
 
 
 if __name__ == "__main__":
@@ -63,6 +63,11 @@ Both algorithms are tested on the same scenario:
     args = parser.parse_args()
     # load the specified dataset
     words = data_loader.load_data(datasets[args.dataset])
+
+    if args.invert:
+        # invert words before insertion if needed
+        words = data_loader.inverse(words)
+
     random_words = data_loader.get_slice(words, pair=False)
     range = data_loader.get_slice(words, pair=True)
     start = range[0]
@@ -75,11 +80,21 @@ Both algorithms are tested on the same scenario:
     # scenarios
 
     print(range)
-    struct = suffix_array()
+
     if args.array:
         """
         ARRAY
         """
+        struct = suffix_array()
+        # insert words
+        for word in words:
+            struct.insert(word)
+
+        if args.graph:
+            struct.visualize(
+                "graphs/", "array_dataset_1", "prefix trie made with dataset n°1", True
+            )
+
         # 1 range search
         print("=" * 30)
         print("RANGE SEARCH")
