@@ -1,68 +1,91 @@
+# Suffix Array vs Prefix Trie Comparison
 
-# README.md
+**SUBJECT 5**
+This project implements and compares two string data structures: a **Suffix Array** and a **Prefix Trie** with string inversion.
 
-.venv to heavy to put in git
-run the command
+## 1. Setup Environment
+
+The `.venv` directory is excluded from this repository. To initialize your local environment:
 
 ```bash
- python -m venv .venv
- # activate with : 
- source .venv/bin/activate
+# Create the virtual environment
+python -m venv .venv
+
+# Activate the environment
+source .venv/bin/activate
+
+# Install required packages
+pip install numpy matplotlib graphviz memory-profiler scipy snakeviz
 
 ```
 
-then install the packages below with.
+### Required Libraries (Detailed List)
+
+To ensure the environment matches the development setup, here are the main libraries and their versions:
 
 ```bash
-pip install graphviz matplotlib memory-profiler argparse
+pip list --not-required
 ```
 
-to see packages manualy installed in .venv.
-
-```bash
- pip list --not-required > README.md
-
+```text
 Package         Version
 --------------- -------
 graphviz        0.21
 matplotlib      3.10.8
 memory-profiler 0.61.0
+numpy           1.26.0
 pip             25.3
 scipy           1.16.3
+snakeviz        2.2.0
 
 ```
 
-get random english words using  
+*Note: For the automated benchmarks, ensure `hyperfine` is installed on your system (`sudo apt install hyperfine` on Linux).*
+
+## 2. Dataset Management
+
+The project uses three incremental datasets. You can generate other using the following commands:
 
 ```bash
-curl https://random-word-api.herokuapp.com/word?number=10000 > dataset_n
+mkdir -p datasets
+curl "[https://random-word-api.herokuapp.com/word?number=100](https://random-word-api.herokuapp.com/word?number=100)" > datasets/dataset_n.txt
 ```
 
-3 datasets of size 100, 10000, 10000 words
+## 3. Usage & CLI Arguments
 
-## Benchmarking and graphs
+The `main.py` script allows you to run specific experiments manually:
 
-**make sure to have these:**
+| Argument          | Description                                                   |
+| ----------------- | ------------------------------------------------------------- |
+| `--array`         | Run the Suffix Array implementation.                          |
+| `--trie`          | Run the Prefix Trie implementation.                           |
+| `-d`, `--dataset` | Choose dataset ID (1, 2, or 3).                               |
+| `-i`, `--invert`  | Invert strings before insertion (Trie becomes a Suffix Trie). |
+| `--profile`       | Enable cProfile and export `.prof` files to `profiling/`.     |
+| `--graph`         | Generate GraphViz visualizations (save to `graphs/`).         |
+| `--verbose`       | Display detailed execution logs.                              |
+
+**Example Command:**
 
 ```bash
-pip install numpy matplotlib scipy 
+python main.py --trie -d 2 --invert --profile --verbose
+
 ```
 
-find the scripts dir of hyperfine to generate benchmark graphs
+## 4. Automated Benchmarking
+
+A dedicated script `benchmark.sh` is provided to automate the entire testing suite across all datasets.
+
+### Running the suite:
 
 ```bash
-sudo find / -name "plot_whisker.py" 2>/dev/null
-[sudo] password for shrek:
-/usr/lib/hyperfine/scripts/plot_whisker.py
+chmod +x benchmark.sh
+./benchmark.sh
+
 ```
 
-To get the benchmark graph from json export with hyperfine
+### Generated Outputs:
 
-```bash
-hyperfine --warmup 2  'python main.py --trie -d 1 ' --export-json benchmark.json
-Benchmark 1: python main.py --trie -d 1
-  Time (mean ± σ):     180.0 ms ±  28.6 ms    [User: 1443.0 ms, System: 26.9 ms]
-  Range (min … max):   147.1 ms … 240.3 ms    19 runs
-
- /usr/lib/hyperfine/scripts/plot_whisker.py  benchmark.json
-```
+* **`benchmarks/`**: Hyperfine execution reports in JSON and Markdown.
+* **`profiling/`**: `cProfile` data. Use `snakeviz profiling/file.prof` to analyze.
+* **`hyperfine_graphs/`**: Visual performance charts (Whisker and Histograms).

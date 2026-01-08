@@ -135,7 +135,9 @@ class prefix_trie:
             return np.array(result)
         return None
 
-    
+    def visualize(
+        self, directory: str, filename: str, comment: str, render: bool
+    ) -> None:
         current = self.root
         diagram = Digraph(name=filename, comment=comment, directory=directory)
         node_id = 0

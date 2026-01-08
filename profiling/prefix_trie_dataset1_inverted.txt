@@ -1,0 +1,23 @@
+         2803 function calls (2485 primitive calls) in 0.002 seconds
+
+   Ordered by: cumulative time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.002    0.002 /home/shrek/workspace/algo_data_structures/main.py:44(run_prefix_trie_benchmark)
+    319/1    0.001    0.000    0.001    0.001 /home/shrek/workspace/algo_data_structures/trie.py:92(range_search)
+      100    0.000    0.000    0.001    0.000 /home/shrek/workspace/algo_data_structures/trie.py:21(insert)
+      658    0.001    0.000    0.001    0.000 /home/shrek/workspace/algo_data_structures/trie.py:81(search)
+      703    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/trie.py:7(__init__)
+       10    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/trie.py:35(remove)
+      319    0.000    0.000    0.000    0.000 {built-in method builtins.sorted}
+      319    0.000    0.000    0.000    0.000 {method 'keys' of 'dict' objects}
+      111    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+       82    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+       61    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
+       71    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+       46    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/trie.py:18(__checkword)
+        1    0.000    0.000    0.000    0.000 {built-in method numpy.array}
+        1    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/trie.py:15(__init__)
+
+

@@ -2,12 +2,98 @@ import data_loader
 from trie import prefix_trie
 from array import suffix_array
 import argparse
+import cProfile
+import pstats
+from io import StringIO
 
-# TODO : visualize finction for array
-# TODO : normalize console output (same format for trie/array algo)
-# FIXME : range search isn't working
-# TODO : benchmarking with hyperfind and cProfile
-# TODO : write seminar
+
+def run_suffix_array_benchmark(words, random_words, start, stop, args):
+    """Run suffix array operations"""
+    struct = suffix_array()
+
+    # insert
+    for word in words:
+        struct.insert(word)
+    # visualize
+    if args.graph:
+        struct.visualize(
+            "graphs/",
+            f"suffix_array_dataset_{args.dataset}",
+            f"Suffix Array visualization - Dataset {args.dataset}",
+        )
+
+    # range search
+    result = struct.range_search(start, stop)
+
+    # search suffixes
+    suffixes = data_loader.get_random_suffixes(words)
+    for suffix in suffixes:
+        result = struct.search(suffix)
+
+    # remove
+    for word in random_words:
+        struct.remove(word)
+
+    # search again after removal
+    for suffix in suffixes:
+        result = struct.search(suffix)
+
+    return struct
+
+
+def run_prefix_trie_benchmark(words, random_words, start, stop, args):
+    """Run prefix trie operations"""
+    struct = prefix_trie()
+
+    # insert
+    for word in words:
+        struct.insert(word=word)
+    # visualize
+    if args.graph:
+        struct.visualize(
+            "graphs/",
+            f"prefix_trie_dataset_{args.dataset}",
+            f"Prefix trie made with dataset n°{args.dataset}",
+            True,
+        )
+
+    # range search
+    struct.range_search(start, stop, current=None, current_word="", result=None)
+
+    # search
+    for word in random_words:
+        struct.search(word=word)
+
+    # remove
+    for word in random_words:
+        struct.remove(word=word, verbose=False)
+
+    # search again
+    for word in random_words:
+        struct.search(word=word)
+
+    return struct
+
+
+def print_profile_results(profiler, output_file=None):
+    """Print and optionally save profiling results"""
+    s = StringIO()
+    stats = pstats.Stats(profiler, stream=s)
+
+    # Sort by cumulative time
+    stats.sort_stats("cumulative")
+    stats.print_stats(20)  # Top 20 functions
+
+    result = s.getvalue()
+    print("\n" + "=" * 80)
+    print("PROFILING RESULTS - Top 20 functions by cumulative time")
+    print("=" * 80)
+    print(result)
+
+    if output_file:
+        with open(output_file, "w") as f:
+            f.write(result)
+        print(f"\nProfiling results saved to: {output_file}")
 
 
 if __name__ == "__main__":
@@ -17,10 +103,10 @@ if __name__ == "__main__":
         2: "datasets/dataset_2.txt",
         3: "datasets/dataset_3.txt",
     }
+
     parser = argparse.ArgumentParser(
-        # preserve string format
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        description="""Script that runs prefix_trie or suffix array algorithms for benchmarking with hyperfine
+        description="""Script that runs prefix_trie or suffix array algorithms for benchmarking
 
 Both algorithms are tested on the same scenario:
   - First insert all the words
@@ -28,11 +114,10 @@ Both algorithms are tested on the same scenario:
   - Search for random words in this trie or array (1/10 of original dataset)
   - Remove those words
   - Search for them again
- 
 """,
     )
 
-    # algo arguments, mutually exclusive
+    # Algorithm arguments
     algo_group = parser.add_mutually_exclusive_group(required=True)
     algo_group.add_argument("--trie", action="store_true", help="prefix trie algorithm")
     algo_group.add_argument(
@@ -60,85 +145,81 @@ Both algorithms are tested on the same scenario:
         help="generate a graph (not recommended for datasets 2 and 3)",
     )
 
+    parser.add_argument(
+        "--profile",
+        "-p",
+        action="store_true",
+        help="enable cProfile profiling and save results",
+    )
+
+    parser.add_argument(
+        "--verbose",
+        "-v",
+        action="store_true",
+        help="print detailed output during operations",
+    )
+
     args = parser.parse_args()
-    # load the specified dataset
+
+    # Load data
     words = data_loader.load_data(datasets[args.dataset])
 
     if args.invert:
-        # invert words before insertion if needed
         words = data_loader.inverse(words)
 
     random_words = data_loader.get_slice(words, pair=False)
-    range = data_loader.get_slice(words, pair=True)
-    start = range[0]
-    stop = range[1]
+    range_pair = data_loader.get_slice(words, pair=True)
+    start = range_pair[0]
+    stop = range_pair[1]
 
-    # print(random_words)
-    # print(range)
+    # Create profiler if requested
+    profiler = cProfile.Profile() if args.profile else None
 
-    struct = None
-    # scenarios
-
-    print(range)
+    # Run benchmark
+    if args.profile:
+        profiler.enable()
 
     if args.array:
-        """
-        ARRAY
-        """
-        struct = suffix_array()
-        # insert words
-        for word in words:
-            struct.insert(word)
+        algo_name = "suffix_array"
+        if args.verbose:
+            print(f"\n{'='*60}")
+            print(f"Running SUFFIX ARRAY on dataset {args.dataset}")
+            print(f"Words: {len(words)}, Range: [{start}, {stop}]")
+            print(f"{'='*60}\n")
 
-        if args.graph:
-            struct.visualize(
-                "graphs/", "array_dataset_1", "prefix trie made with dataset n°1", True
-            )
+        struct = run_suffix_array_benchmark(words, random_words, start, stop, args)
 
-        # 1 range search
-        print("=" * 30)
-        print("RANGE SEARCH")
-        print("=" * 30)
-        print(struct.range_search(start, stop))
-        suffixes = data_loader.get_random_suffixes(words)
+    else:  # trie
+        algo_name = "prefix_trie"
+        if args.verbose:
+            print(f"\n{'='*60}")
+            print(f"Running PREFIX TRIE on dataset {args.dataset}")
+            print(f"Words: {len(words)}, Range: [{start}, {stop}]")
+            print(f"Inverted: {args.invert}")
+            print(f"{'='*60}\n")
 
-        # 2 search
-        for suffix in suffixes:
-            result = struct.search(suffix)
-            print(f"Words with suffix '{suffix}': {result}")
+        struct = run_prefix_trie_benchmark(words, random_words, start, stop, args)
 
-        # 3 remove
-        for word in words:
-            print(f"remove word : '{word}'")
-            struct.remove(word)
-        # 4 search again
-        for suffix in suffixes:
-            result = struct.search(suffix)
-            print(f"Words with suffix '{suffix}': {result}")
+    if args.profile:
+        profiler.disable()
 
-    else:
-        """
-        TRIE
-        """
-        # init trie
-        struct = prefix_trie()
-        for word in words:
-            struct.insert(word=word)
+        # Create profiling directory
+        import os
 
-        if args.graph:
-            struct.visualize(
-                "graphs/", "dataset_1", "prefix trie made with dataset n°1", True
-            )
+        os.makedirs("profiling", exist_ok=True)
 
-        print(
-            struct.range_search(start, stop, current=None, current_word="", result=None)
-        )
-        # 2 search
-        for word in random_words:
-            print(word, " found  : ", struct.search(word=word))
-        # 3 remove
-        for word in random_words:
-            struct.remove(word=word, verbose=False)
-        # 4 search again
-        for word in random_words:
-            print(word, " found  : ", struct.search(word=word))
+        # Save profile data
+        profile_filename = f"profiling/{algo_name}_dataset{args.dataset}"
+        if args.invert:
+            profile_filename += "_inverted"
+
+        # Save .prof file for visualization tools
+        profiler.dump_stats(f"{profile_filename}.prof")
+        print(f"\nProfile data saved to: {profile_filename}.prof")
+
+        # Print and save text results
+        print_profile_results(profiler, f"{profile_filename}.txt")
+
+        print("\n" + "=" * 80)
+        print("To visualize with snakeviz: snakeviz " + profile_filename + ".prof")
+        print("=" * 80)
