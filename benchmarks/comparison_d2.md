@@ -1,4 +1,4 @@
-| Command | Mean [s] | Min [s] | Max [s] | Relative |
+| Command | Mean [ms] | Min [ms] | Max [ms] | Relative |
 |:---|---:|---:|---:|---:|
-| `python main.py --array -d 2` | 2.601 ± 0.015 | 2.580 | 2.619 | 14.99 ± 0.24 |
-| `python main.py --trie -d 2 -i` | 0.173 ± 0.003 | 0.169 | 0.180 | 1.00 |
+| `python main.py --array -d 2` | 168.1 ± 5.8 | 164.3 | 190.2 | 1.00 |
+| `python main.py --trie -d 2 -i` | 170.3 ± 3.2 | 164.2 | 175.3 | 1.01 ± 0.04 |

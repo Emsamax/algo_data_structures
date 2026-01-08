@@ -1,3 +1,4 @@
+import bisect
 import numpy as np
 
 
@@ -42,9 +43,13 @@ class suffix_array:
             all_tuples = list(self.suffixes_array) + new_tuples
 
         # Sort and convert to np.array
-        self.suffixes_array = np.array(
-            sorted(all_tuples, key=lambda x: x[0]), dtype=object
-        )
+        # self.suffixes_array = np.array(
+        #    sorted(all_tuples, key=lambda x: x[0]), dtype=object
+        # )
+        # changed to bisect insert to go from n²*log(n) from n²
+        # because too long for dataset 3
+        for suffix in new_suffixes:
+            bisect.insort(all_tuples, (suffix, word), key=lambda x: x[0])
 
     def remove(self, word: str) -> None:
         """

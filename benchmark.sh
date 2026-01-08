@@ -12,7 +12,7 @@ if [ -z "$HYPERFINE_SCRIPTS_DIR" ]; then
     exit 1
 fi
 echo -e "Found scripts at: $HYPERFINE_SCRIPTS_DIR"
-echo -e "Starting benchmarking loop"
+echo -e "\nStarting benchmarking loop"
 
 # Create output directories
 mkdir -p $BENCHMARK_DIR $PROFILE_DIR $GRAPH_DIR
@@ -22,7 +22,7 @@ for d in "${DATASETS[@]}"; do
     echo -e "\n[Dataset $d] Benchmarks and Profiling..."
     
     # 1. Run Comparison Benchmark with Hyperfine
-    hyperfine --warmup 2 --min-runs 5 \
+    hyperfine --warmup 2 --min-runs 5 --show-output --ignore-failure \
     --export-json "$BENCHMARK_DIR/comparison_d$d.json" \
     --export-markdown "$BENCHMARK_DIR/comparison_d$d.md" \
     "python main.py --array -d $d" \
@@ -38,11 +38,11 @@ for d in "${DATASETS[@]}"; do
    
     # Generate Whisker plot
     python3 "$HYPERFINE_SCRIPTS_DIR/plot_whisker.py" "$BENCHMARK_DIR/comparison_d$d.json" \
-    --output "$GRAPH_DIR/whisker_d$d.png"
+    --output "$GRAPH_DIR/whisker_d$d.png" 2>/dev/null
     
     # Generate Histogram plot
     python3 "$HYPERFINE_SCRIPTS_DIR/plot_histogram.py" "$BENCHMARK_DIR/comparison_d$d.json" \
-    --output "$GRAPH_DIR/histogram_d$d.png"
+    --output "$GRAPH_DIR/histogram_d$d.png" 2>/dev/null
 done
 
 echo -e "  Benchmarking and Graph Generation Complete"

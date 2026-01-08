@@ -1,24 +1,24 @@
-         48698 function calls in 0.042 seconds
+         7791 function calls in 0.004 seconds
 
    Ordered by: cumulative time
 
    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-        1    0.002    0.002    0.042    0.042 /home/shrek/workspace/algo_data_structures/main.py:10(run_suffix_array_benchmark)
-      100    0.006    0.000    0.030    0.000 /home/shrek/workspace/algo_data_structures/array.py:13(insert)
-      201    0.008    0.000    0.014    0.000 {built-in method builtins.sorted}
-      413    0.012    0.000    0.012    0.000 {built-in method numpy.array}
-       10    0.006    0.001    0.008    0.001 /home/shrek/workspace/algo_data_structures/array.py:49(remove)
-    44785    0.006    0.000    0.006    0.000 /home/shrek/workspace/algo_data_structures/array.py:46(<lambda>)
-      200    0.001    0.000    0.002    0.000 /home/shrek/workspace/algo_data_structures/array.py:85(search)
-      200    0.001    0.000    0.001    0.000 /home/shrek/workspace/algo_data_structures/array.py:65(_binary_search)
-        1    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/data_loader.py:61(get_random_suffixes)
+        1    0.000    0.000    0.004    0.004 /home/shrek/workspace/algo_data_structures/main.py:10(run_suffix_array_benchmark)
+      100    0.001    0.000    0.003    0.000 /home/shrek/workspace/algo_data_structures/array.py:14(insert)
+      874    0.001    0.000    0.001    0.000 {built-in method _bisect.insort_right}
+      200    0.000    0.000    0.001    0.000 /home/shrek/workspace/algo_data_structures/array.py:90(search)
+        1    0.000    0.000    0.001    0.001 /home/shrek/workspace/algo_data_structures/data_loader.py:61(get_random_suffixes)
+     4209    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/array.py:52(<lambda>)
+      313    0.000    0.000    0.000    0.000 {built-in method numpy.array}
       974    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
       800    0.000    0.000    0.000    0.000 {built-in method builtins.len}
-      600    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
-      409    0.000    0.000    0.000    0.000 {method 'add' of 'set' objects}
-        1    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/array.py:110(range_search)
+      200    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/array.py:70(_binary_search)
+      101    0.000    0.000    0.000    0.000 {built-in method builtins.sorted}
+       10    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/array.py:54(remove)
+        1    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/array.py:115(range_search)
         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
-        1    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/array.py:6(__init__)
+        1    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/array.py:7(__init__)
+        4    0.000    0.000    0.000    0.000 {method 'add' of 'set' objects}
         1    0.000    0.000    0.000    0.000 {method 'keys' of 'dict' objects}
 
 
