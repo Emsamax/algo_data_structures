@@ -21,28 +21,33 @@ mkdir -p $BENCHMARK_DIR $PROFILE_DIR $GRAPH_DIR
 for d in "${DATASETS[@]}"; do
     echo -e "\n[Dataset $d] Benchmarks and Profiling..."
     
-    # 1. Run Comparison Benchmark with Hyperfine
+    # run benchmark with Hyperfine
     hyperfine --warmup 2 --min-runs 5 --show-output --ignore-failure \
     --export-json "$BENCHMARK_DIR/comparison_d$d.json" \
     --export-markdown "$BENCHMARK_DIR/comparison_d$d.md" \
     "python main.py --array -d $d" \
-    "python main.py --trie -d $d -i"
+    "python main.py --trie -d $d -i" 2>/dev/null
     
-    # 2. Generate Profiling Data (cProfile)
+    # gerate Profiling Data using cProfile
     echo "  - Generating cProfile data for Dataset $d..."
     python main.py --array -d $d --profile > /dev/null 2>&1
     python main.py --trie -d $d -i --profile > /dev/null 2>&1
     
-    # 3. Generate Visual Graphs using Hyperfine scripts
+    # generate Visual Graphs using Hyperfine's scripts
     echo "  - Generating performance graphs for Dataset $d..."
-   
-    # Generate Whisker plot
+    
+    # whisker plot
     python3 "$HYPERFINE_SCRIPTS_DIR/plot_whisker.py" "$BENCHMARK_DIR/comparison_d$d.json" \
     --output "$GRAPH_DIR/whisker_d$d.png" 2>/dev/null
     
-    # Generate Histogram plot
+    # historigram plot
     python3 "$HYPERFINE_SCRIPTS_DIR/plot_histogram.py" "$BENCHMARK_DIR/comparison_d$d.json" \
     --output "$GRAPH_DIR/histogram_d$d.png" 2>/dev/null
+    
+    # progression plot
+    python3 "$HYPERFINE_SCRIPTS_DIR/plot_progression.py" "$BENCHMARK_DIR/comparison_d$d.json" \
+    --output "$GRAPH_DIR/progression_d$d.png" 2>/dev/null
+    
 done
 
 echo -e "  Benchmarking and Graph Generation Complete"

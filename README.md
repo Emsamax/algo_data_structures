@@ -77,6 +77,8 @@ python main.py --trie -d 2 --invert --profile --verbose
 
 ## 4. Automated Benchmarking
 
+**ONLY WORKS ON UNIX BASED SYSTEM.**
+
 A custom script `benchmark.sh` is provided to automate the entire testing suite across all 3 defaults datasets and the 2 algorithms.
 It uses hyperfine python scripts to generate  graphs and it generates .prof and .txt result for memory profiling in `profiling/` dir.
 You can visualize .prof files with snakevize.
@@ -87,6 +89,12 @@ You can visualize .prof files with snakevize.
 chmod +x benchmark.sh
 ./benchmark.sh
 
+```
+
+*Note: dont forget to activate .venv env when you are using the script `benchmak.sh` with :*
+
+```shell
+source ./.venv/bin/activate
 ```
 
 ### Generated Outputs

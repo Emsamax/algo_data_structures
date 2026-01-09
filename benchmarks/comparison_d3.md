@@ -1,4 +1,4 @@
 | Command | Mean [ms] | Min [ms] | Max [ms] | Relative |
 |:---|---:|---:|---:|---:|
-| `python main.py --array -d 3` | 299.3 ± 1.9 | 296.7 | 302.8 | 1.00 |
-| `python main.py --trie -d 3 -i` | 342.7 ± 26.9 | 313.0 | 394.5 | 1.14 ± 0.09 |
+| `python main.py --array -d 3` | 300.6 ± 1.7 | 297.5 | 302.8 | 1.00 |
+| `python main.py --trie -d 3 -i` | 318.8 ± 17.4 | 288.2 | 337.0 | 1.06 ± 0.06 |

@@ -1,23 +1,23 @@
-         4244 function calls (3656 primitive calls) in 0.003 seconds
+         4551 function calls (3906 primitive calls) in 0.004 seconds
 
    Ordered by: cumulative time
 
    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
         1    0.000    0.000    0.003    0.003 /home/shrek/workspace/algo_data_structures/main.py:44(run_prefix_trie_benchmark)
-    589/1    0.001    0.000    0.002    0.002 /home/shrek/workspace/algo_data_structures/trie.py:92(range_search)
-      100    0.001    0.000    0.001    0.000 /home/shrek/workspace/algo_data_structures/trie.py:21(insert)
-     1198    0.001    0.000    0.001    0.000 /home/shrek/workspace/algo_data_structures/trie.py:81(search)
+    646/1    0.001    0.000    0.002    0.002 /home/shrek/workspace/algo_data_structures/trie.py:92(range_search)
+      100    0.000    0.000    0.001    0.000 /home/shrek/workspace/algo_data_structures/trie.py:21(insert)
+     1312    0.001    0.000    0.001    0.000 /home/shrek/workspace/algo_data_structures/trie.py:81(search)
       703    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/trie.py:7(__init__)
-      589    0.000    0.000    0.000    0.000 {built-in method builtins.sorted}
+      646    0.000    0.000    0.000    0.000 {built-in method builtins.sorted}
        10    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/trie.py:35(remove)
-      589    0.000    0.000    0.000    0.000 {method 'keys' of 'dict' objects}
-      149    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
-       89    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
-        1    0.000    0.000    0.000    0.000 {built-in method numpy.array}
+      646    0.000    0.000    0.000    0.000 {method 'keys' of 'dict' objects}
+      164    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
        65    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
-       84    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/trie.py:18(__checkword)
-        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+       88    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+       92    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/trie.py:18(__checkword)
+        1    0.000    0.000    0.000    0.000 {built-in method numpy.array}
        75    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
         1    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/trie.py:15(__init__)
 
 

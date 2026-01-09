@@ -1,14 +1,14 @@
-         79483 function calls in 0.038 seconds
+         79428 function calls in 0.037 seconds
 
    Ordered by: cumulative time
 
    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-        1    0.002    0.002    0.038    0.038 /home/shrek/workspace/algo_data_structures/main.py:10(run_suffix_array_benchmark)
-     1000    0.008    0.000    0.027    0.000 /home/shrek/workspace/algo_data_structures/array.py:14(insert)
+        1    0.002    0.002    0.037    0.037 /home/shrek/workspace/algo_data_structures/main.py:10(run_suffix_array_benchmark)
+     1000    0.007    0.000    0.027    0.000 /home/shrek/workspace/algo_data_structures/array.py:14(insert)
      8848    0.010    0.000    0.014    0.000 {built-in method _bisect.insort_right}
     42878    0.004    0.000    0.004    0.000 /home/shrek/workspace/algo_data_structures/array.py:52(<lambda>)
-     2000    0.002    0.000    0.004    0.000 /home/shrek/workspace/algo_data_structures/array.py:90(search)
         1    0.003    0.003    0.004    0.004 /home/shrek/workspace/algo_data_structures/data_loader.py:61(get_random_suffixes)
+     2000    0.002    0.000    0.004    0.000 /home/shrek/workspace/algo_data_structures/array.py:90(search)
      3103    0.004    0.000    0.004    0.000 {built-in method numpy.array}
      9848    0.002    0.000    0.002    0.000 {method 'append' of 'list' objects}
      1001    0.001    0.000    0.001    0.000 {built-in method builtins.sorted}
@@ -16,7 +16,7 @@
      2000    0.000    0.000    0.001    0.000 /home/shrek/workspace/algo_data_structures/array.py:70(_binary_search)
         1    0.000    0.000    0.001    0.001 /home/shrek/workspace/algo_data_structures/array.py:115(range_search)
       100    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/array.py:54(remove)
-      699    0.000    0.000    0.000    0.000 {method 'add' of 'set' objects}
+      644    0.000    0.000    0.000    0.000 {method 'add' of 'set' objects}
         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
         1    0.000    0.000    0.000    0.000 /home/shrek/workspace/algo_data_structures/array.py:7(__init__)
         1    0.000    0.000    0.000    0.000 {method 'keys' of 'dict' objects}
